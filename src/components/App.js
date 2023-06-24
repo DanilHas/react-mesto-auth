@@ -22,7 +22,8 @@ function App() {
   const [cards, setCards] = useState([]);
   const [isLoading, setLoading] = useState(false);
 
-  const [validation, handleValidation, setValid] = useCheckValidation();
+  const [validation, handleValidation, setValid, setErrorMessage] =
+    useCheckValidation();
   const { isValid } = validation;
 
   useEffect(() => {
@@ -191,6 +192,7 @@ function App() {
         isLoading={isLoading}
         handleValidation={handleValidation}
         validation={validation}
+        setErrorMessage={setErrorMessage}
       />
       <AddPlacePopup
         isOpen={isAddPlacePopupOpen}
@@ -200,6 +202,7 @@ function App() {
         isLoading={isLoading}
         handleValidation={handleValidation}
         validation={validation}
+        setErrorMessage={setErrorMessage}
       />
       <EditAvatarPopup
         isOpen={isEditAvatarPopupOpen}
@@ -209,6 +212,7 @@ function App() {
         isLoading={isLoading}
         handleValidation={handleValidation}
         validation={validation}
+        setErrorMessage={setErrorMessage}
       />
       <ConfirmPopup
         isOpen={isConfirmPopupOpen}

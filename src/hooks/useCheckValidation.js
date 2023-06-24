@@ -20,6 +20,7 @@ function useCheckValidation() {
     { isInputValid, errorMessage, isValid },
     handleCheckValidation,
     setValid,
+    setErrorMessage,
   ];
 }
 

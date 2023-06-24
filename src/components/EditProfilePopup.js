@@ -10,6 +10,7 @@ function EditProfilePopup({
   isLoading,
   handleValidation,
   validation,
+  setErrorMessage,
 }) {
   const currentUser = useContext(CurrentUserContext);
 
@@ -21,7 +22,8 @@ function EditProfilePopup({
   useEffect(() => {
     setName(currentUser.name);
     setDescription(currentUser.about);
-  }, [currentUser]);
+    setErrorMessage({});
+  }, [currentUser, isOpen, setErrorMessage]);
 
   const handleChangeName = (event) => {
     setName(event.target.value);

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PopupWithForm from './PopupWithForm';
 
 function AddPlacePopup({
@@ -9,6 +9,7 @@ function AddPlacePopup({
   isLoading,
   handleValidation,
   validation,
+  setErrorMessage,
 }) {
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
@@ -23,10 +24,13 @@ function AddPlacePopup({
       name,
       link,
     });
+  };
 
+  useEffect(() => {
     setName('');
     setLink('');
-  };
+    setErrorMessage({});
+  }, [isOpen, setErrorMessage]);
 
   const handleChangeName = (event) => {
     setName(event.target.value);
