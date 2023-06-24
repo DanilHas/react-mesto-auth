@@ -6,6 +6,10 @@ function PopupWithForm({
   isOpen,
   onClose,
   children,
+  onSubmit,
+  isLoading,
+  onChange,
+  isValid,
 }) {
   return (
     <section
@@ -19,14 +23,26 @@ function PopupWithForm({
           onClick={onClose}
         />
         <h2 className="popup__title">{title}</h2>
-        <form className="form" name={`${name}-form`} noValidate="">
+        <form
+          className="form"
+          name={`${name}-form`}
+          noValidate
+          onSubmit={onSubmit}
+          onChange={onChange}
+        >
           {children}
           <button
             type="submit"
-            className="form__submit-button"
+            className={`form__submit-button ${
+              !isValid ? 'form__submit-button_disabled' : ''
+            }`}
+            disabled={!isValid}
             aria-label={submitButtonDescription}
           >
-            {submitButtonTitle}
+            <span
+              className={isLoading ? 'form__spinner' : 'form__spinner_hide'}
+            ></span>
+            {isLoading ? '' : submitButtonTitle}
           </button>
         </form>
       </div>

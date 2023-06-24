@@ -1,34 +1,27 @@
-import { useEffect, useState } from 'react';
-import api from '../utils/api';
+import { useContext } from 'react';
 import Card from './Card';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
-  const [userName, setUserName] = useState('');
-  const [userDescription, setUserDescription] = useState('');
-  const [userAvatar, setUserAvatar] = useState('');
-  const [cards, setCards] = useState([]);
-
-  useEffect(() => {
-    api.getUserInfo()
-      .then((result) => {
-        setUserName(result.name);
-        setUserDescription(result.about);
-        setUserAvatar(result.avatar);
-      })
-      .catch((err) => console.error(`${err} ${err.message}`));
-  }, []);
-
-  useEffect(() => {
-    api.getInitialCards()
-      .then((result) => {
-        setCards(result);
-      })
-      .catch((err) => console.error(`${err} ${err.message}`));
-  }, []);
+function Main({
+  onEditProfile,
+  onAddPlace,
+  onEditAvatar,
+  onCardClick,
+  onCardLike,
+  onConfirm,
+  cards,
+}) {
+  const currentUser = useContext(CurrentUserContext);
 
   const listItems = cards.map((card) => {
     return (
-      <Card card={card} key={card._id} onCardClick={onCardClick} />
+      <Card
+        card={card}
+        key={card._id}
+        onCardClick={onCardClick}
+        onCardLike={onCardLike}
+        onConfirm={onConfirm}
+      />
     );
   });
 
@@ -44,19 +37,19 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
           >
             <img
               className="profile__avatar"
-              src={userAvatar}
+              src={currentUser.avatar}
               alt="Аватар пользователя"
             />
           </button>
           <div className="profile__info">
-            <h1 className="profile__name">{userName}</h1>
+            <h1 className="profile__name">{currentUser.name}</h1>
             <button
               className="profile__edit-button"
               type="button"
               aria-label="редактирования профиля"
               onClick={onEditProfile}
             />
-            <p className="profile__about-yourself">{userDescription}</p>
+            <p className="profile__about-yourself">{currentUser.about}</p>
           </div>
         </div>
         <button

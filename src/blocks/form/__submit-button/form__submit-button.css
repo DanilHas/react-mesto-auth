@@ -1,4 +1,7 @@
 .form__submit-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   max-width: 358px;
   width: 100%;
   min-height: 50px;

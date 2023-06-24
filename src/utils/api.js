@@ -37,13 +37,13 @@ class Api {
     return Promise.all([this.getUserInfo(), this.getInitialCards()]);
   }
 
-  editUserInfo(formInputValues) {
+  setUserInfo(formInputValues) {
     const promise = fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        name: formInputValues.username,
-        about: formInputValues['user-info'],
+        name: formInputValues.name,
+        about: formInputValues.about,
       }),
     });
 
@@ -74,26 +74,26 @@ class Api {
     return this._returnPromiseResult(promise);
   }
 
-  likeCard(cardId) {
-    const promise = fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
-      method: 'PUT',
-      headers: {
-        authorization: this._headers.authorization,
-      },
-    });
+  changeLikeCardStatus(cardId, likeCardStatus) {
+    if (likeCardStatus) {
+      const promise = fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+        method: 'PUT',
+        headers: {
+          authorization: this._headers.authorization,
+        },
+      });
 
-    return this._returnPromiseResult(promise);
-  }
+      return this._returnPromiseResult(promise);
+    } else {
+      const promise = fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+        method: 'DELETE',
+        headers: {
+          authorization: this._headers.authorization,
+        },
+      });
 
-  deleteLike(cardId) {
-    const promise = fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
-      method: 'DELETE',
-      headers: {
-        authorization: this._headers.authorization,
-      },
-    });
-
-    return this._returnPromiseResult(promise);
+      return this._returnPromiseResult(promise);
+    }
   }
 
   changeAvatar(url) {
