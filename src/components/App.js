@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react';
-import Footer from './Footer';
-import Header from './Header';
 import Main from './Main';
 import ImagePopup from './ImagePopup';
 import api from '../utils/api';
@@ -10,6 +8,12 @@ import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 import ConfirmPopup from './ConfirmPopup';
 import useCheckValidation from '../hooks/useCheckValidation';
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
+import Register from './Register';
+import Login from './Login';
+import ProtectedRoute from './ProtectedRoute';
+import InfoTooltip from './InfoTooltip';
+import * as auth from '../utils/auth';
 
 function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
@@ -21,13 +25,42 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
   const [isLoading, setLoading] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [isAuthPopupOpen, setAuthPopupOpen] = useState(false);
+  const [isAuthInfoTooltipSuccess, setAuthInfoTooltipSuccess] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
+  const [isBurgerMenuOpen, setBurgerMenuOpen] = useState(false);
 
   const [validation, handleValidation, setValid, setErrorMessage] =
     useCheckValidation();
   const { isValid } = validation;
 
+  const navigate = useNavigate();
+
   useEffect(() => {
-    api.getUserInfo()
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      auth
+        .getContent(token)
+        .then((res) => {
+          if (res) {
+            setUserEmail(res.data.email);
+            setLoggedIn(true);
+            navigate('/', { replace: true });
+          }
+        })
+        .catch((err) => {
+          setAuthPopupOpen(true);
+          setAuthInfoTooltipSuccess(false);
+          console.error(`${err} ${err.message}`);
+        });
+    }
+  }, [navigate]);
+
+  useEffect(() => {
+    api
+      .getUserInfo()
       .then((result) => {
         setCurrentUser(result);
       })
@@ -35,7 +68,8 @@ function App() {
   }, []);
 
   useEffect(() => {
-    api.getInitialCards()
+    api
+      .getInitialCards()
       .then((result) => {
         setCards(result);
       })
@@ -49,6 +83,7 @@ function App() {
       isEditAvatarPopupOpen,
       isConfirmPopupOpen,
       isImagePopupOpen,
+      isAuthPopupOpen,
     ];
 
     return popupsState.some((state) => state === true);
@@ -114,7 +149,8 @@ function App() {
   const handleCardLike = (card) => {
     const isLiked = card.likes.some((item) => item._id === currentUser._id);
 
-    api.changeLikeCardStatus(card._id, !isLiked)
+    api
+      .changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
         setCards((state) =>
           state.map((c) => (c._id === card._id ? newCard : c))
@@ -124,7 +160,8 @@ function App() {
   };
 
   const handleCardDelete = (card) => {
-    api.deleteCard(card._id)
+    api
+      .deleteCard(card._id)
       .then(() => {
         setCards((state) => state.filter((item) => item._id !== card._id));
         closeAllPopups();
@@ -134,7 +171,8 @@ function App() {
   };
 
   const handleUpdateUser = (newUserInfo) => {
-    api.setUserInfo(newUserInfo)
+    api
+      .setUserInfo(newUserInfo)
       .then((result) => {
         setCurrentUser(result);
         closeAllPopups();
@@ -144,7 +182,8 @@ function App() {
   };
 
   const handleUpdateAvatar = (newAvatar) => {
-    api.changeAvatar(newAvatar.avatar)
+    api
+      .changeAvatar(newAvatar.avatar)
       .then((result) => {
         setCurrentUser(result);
         closeAllPopups();
@@ -154,7 +193,8 @@ function App() {
   };
 
   const handleAddPlaceSubmit = (newPlace) => {
-    api.addNewCard(newPlace)
+    api
+      .addNewCard(newPlace)
       .then((newCard) => {
         setCards([newCard, ...cards]);
         closeAllPopups();
@@ -163,27 +203,96 @@ function App() {
       .finally(() => setLoading(false));
   };
 
+  const handleLogin = () => {
+    setLoggedIn(true);
+  };
+
+  const handleSignout = () => {
+    localStorage.removeItem('token');
+    setLoggedIn(false);
+    navigate('/signin', { replace: true });
+    setValid(false);
+    setBurgerMenuOpen(false);
+  };
+
+  const handleResetValidation = () => {
+    setValid(false);
+    setErrorMessage(false);
+  };
+
+  const handleBurgerButtonClick = () => {
+    setBurgerMenuOpen(!isBurgerMenuOpen);
+  };
+
   const closeAllPopups = () => {
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
     setEditAvatarPopupOpen(false);
     setImagePopupOpen(false);
     setConfirmPopupOpen(false);
+    setAuthPopupOpen(false);
   };
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <Header />
-      <Main
-        onEditProfile={handleEditProfileClick}
-        onAddPlace={handleAddPlaceClick}
-        onEditAvatar={handleEditAvatarClick}
-        onCardClick={handleCardClick}
-        onCardLike={handleCardLike}
-        onConfirm={handleConfirmClick}
-        cards={cards}
-      />
-      <Footer />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute
+              element={
+                <Main
+                  onEditProfile={handleEditProfileClick}
+                  onAddPlace={handleAddPlaceClick}
+                  onEditAvatar={handleEditAvatarClick}
+                  onCardClick={handleCardClick}
+                  onCardLike={handleCardLike}
+                  onConfirm={handleConfirmClick}
+                  cards={cards}
+                  userData={userEmail}
+                  onHeaderLinkClick={handleSignout}
+                  isLoggedIn={loggedIn}
+                  isBurgerMenuOpen={isBurgerMenuOpen}
+                  onBurgerButtonClick={handleBurgerButtonClick}
+                />
+              }
+              loggedIn={loggedIn}
+            />
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <Register
+              setAuthPopupOpen={setAuthPopupOpen}
+              setAuthInfoTooltipSuccess={setAuthInfoTooltipSuccess}
+              onChange={handleValidation}
+              validation={validation}
+              isLoading={isLoading}
+              onLoading={handleLoading}
+              setLoading={setLoading}
+              resetValidation={handleResetValidation}
+            />
+          }
+        />
+        <Route
+          path="/signin"
+          element={
+            <Login
+              handleLogin={handleLogin}
+              setAuthPopupOpen={setAuthPopupOpen}
+              setAuthInfoTooltipSuccess={setAuthInfoTooltipSuccess}
+              onChange={handleValidation}
+              validation={validation}
+              isLoading={isLoading}
+              onLoading={handleLoading}
+              setLoading={setLoading}
+              resetValidation={handleResetValidation}
+            />
+          }
+        />
+        <Route path="*" element={<Navigate to="/signin" replace />} />
+      </Routes>
       <EditProfilePopup
         isOpen={isEditProfilePopupOpen}
         onClose={closeAllPopups}
@@ -227,6 +336,11 @@ function App() {
         card={selectedCard}
         onClose={closeAllPopups}
         isOpen={isImagePopupOpen}
+      />
+      <InfoTooltip
+        isOpen={isAuthPopupOpen}
+        onClose={closeAllPopups}
+        isSuccess={isAuthInfoTooltipSuccess}
       />
     </CurrentUserContext.Provider>
   );

@@ -70,7 +70,7 @@ function EditProfilePopup({
           value={name || ''}
         />
         <span
-          className={`form__input-error place-input-error ${
+          className={`form__input-error ${
             !isInputValid.userName ? 'form__input-error_visible' : ''
           }`}
         >
@@ -89,7 +89,7 @@ function EditProfilePopup({
           value={description || ''}
         />
         <span
-          className={`form__input-error place-input-error ${
+          className={`form__input-error ${
             !isInputValid.userInfo ? 'form__input-error_visible' : ''
           }`}
         >

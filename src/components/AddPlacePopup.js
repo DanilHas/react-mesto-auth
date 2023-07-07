@@ -67,7 +67,7 @@ function AddPlacePopup({
           value={name}
         />
         <span
-          className={`form__input-error place-input-error ${
+          className={`form__input-error ${
             !isInputValid.name ? 'form__input-error_visible' : ''
           }`}
         >
@@ -84,7 +84,7 @@ function AddPlacePopup({
           value={link}
         />
         <span
-          className={`form__input-error place-input-error ${
+          className={`form__input-error ${
             !isInputValid.link ? 'form__input-error_visible' : ''
           }`}
         >

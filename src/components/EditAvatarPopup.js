@@ -53,7 +53,7 @@ function EditAvatarPopup({
           ref={inputRef}
         />
         <span
-          className={`form__input-error place-input-error ${
+          className={`form__input-error ${
             !isInputValid.avatar ? 'form__input-error_visible' : ''
           }`}
         >
