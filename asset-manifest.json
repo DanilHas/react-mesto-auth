@@ -1,28 +1,30 @@
 {
   "files": {
-    "main.css": "/mesto-react/static/css/main.ecfc0ba7.css",
-    "main.js": "/mesto-react/static/js/main.668213f1.js",
-    "static/js/787.5530211c.chunk.js": "/mesto-react/static/js/787.5530211c.chunk.js",
-    "static/media/Inter-Medium.woff": "/mesto-react/static/media/Inter-Medium.9053572c46aeb4b16caa.woff",
-    "static/media/Inter-Black.woff": "/mesto-react/static/media/Inter-Black.c6938660eec019fefd68.woff",
-    "static/media/Inter-Regular.woff": "/mesto-react/static/media/Inter-Regular.8c206db99195777c6769.woff",
-    "static/media/Inter-Medium.woff2": "/mesto-react/static/media/Inter-Medium.293fd13dbca5a3e450ef.woff2",
-    "static/media/Inter-Black.woff2": "/mesto-react/static/media/Inter-Black.15ca31c0a2a68f76d2d1.woff2",
-    "static/media/Inter-Regular.woff2": "/mesto-react/static/media/Inter-Regular.c8ba52b05a9ef10f4758.woff2",
-    "static/media/header-logo.svg": "/mesto-react/static/media/header-logo.ab0f4b930baa26c3efae5de416dea328.svg",
-    "index.html": "/mesto-react/index.html",
-    "static/media/like.svg": "/mesto-react/static/media/like.d749023c8da02c85eebc.svg",
-    "static/media/trash-icon.svg": "/mesto-react/static/media/trash-icon.161265c632b9f887063c.svg",
-    "static/media/like-active.svg": "/mesto-react/static/media/like-active.d750ae7834bd9bfe5181.svg",
-    "static/media/popup-close-icon.svg": "/mesto-react/static/media/popup-close-icon.e7037ad5420e241f7a53.svg",
-    "static/media/edit-button-pencil.svg": "/mesto-react/static/media/edit-button-pencil.5f7df902c26d761a5259.svg",
-    "static/media/add-button-plus.svg": "/mesto-react/static/media/add-button-plus.9d4893b84ffe6c9d13b3.svg",
-    "main.ecfc0ba7.css.map": "/mesto-react/static/css/main.ecfc0ba7.css.map",
-    "main.668213f1.js.map": "/mesto-react/static/js/main.668213f1.js.map",
-    "787.5530211c.chunk.js.map": "/mesto-react/static/js/787.5530211c.chunk.js.map"
+    "main.css": "/react-mesto-auth/static/css/main.14c0ae42.css",
+    "main.js": "/react-mesto-auth/static/js/main.718f01f6.js",
+    "static/js/787.5530211c.chunk.js": "/react-mesto-auth/static/js/787.5530211c.chunk.js",
+    "static/media/Inter-Medium.woff": "/react-mesto-auth/static/media/Inter-Medium.9053572c46aeb4b16caa.woff",
+    "static/media/Inter-Black.woff": "/react-mesto-auth/static/media/Inter-Black.c6938660eec019fefd68.woff",
+    "static/media/Inter-Regular.woff": "/react-mesto-auth/static/media/Inter-Regular.8c206db99195777c6769.woff",
+    "static/media/Inter-Medium.woff2": "/react-mesto-auth/static/media/Inter-Medium.293fd13dbca5a3e450ef.woff2",
+    "static/media/Inter-Black.woff2": "/react-mesto-auth/static/media/Inter-Black.15ca31c0a2a68f76d2d1.woff2",
+    "static/media/Inter-Regular.woff2": "/react-mesto-auth/static/media/Inter-Regular.c8ba52b05a9ef10f4758.woff2",
+    "static/media/header-logo.svg": "/react-mesto-auth/static/media/header-logo.ab0f4b930baa26c3efae5de416dea328.svg",
+    "index.html": "/react-mesto-auth/index.html",
+    "static/media/like.svg": "/react-mesto-auth/static/media/like.d749023c8da02c85eebc.svg",
+    "static/media/fail.svg": "/react-mesto-auth/static/media/fail.364858f3fa16143438c67f07a3198673.svg",
+    "static/media/success.svg": "/react-mesto-auth/static/media/success.4736adbdc4e212163f7df45083076ae2.svg",
+    "static/media/trash-icon.svg": "/react-mesto-auth/static/media/trash-icon.161265c632b9f887063c.svg",
+    "static/media/like-active.svg": "/react-mesto-auth/static/media/like-active.d750ae7834bd9bfe5181.svg",
+    "static/media/popup-close-icon.svg": "/react-mesto-auth/static/media/popup-close-icon.e7037ad5420e241f7a53.svg",
+    "static/media/edit-button-pencil.svg": "/react-mesto-auth/static/media/edit-button-pencil.5f7df902c26d761a5259.svg",
+    "static/media/add-button-plus.svg": "/react-mesto-auth/static/media/add-button-plus.9d4893b84ffe6c9d13b3.svg",
+    "main.14c0ae42.css.map": "/react-mesto-auth/static/css/main.14c0ae42.css.map",
+    "main.718f01f6.js.map": "/react-mesto-auth/static/js/main.718f01f6.js.map",
+    "787.5530211c.chunk.js.map": "/react-mesto-auth/static/js/787.5530211c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ecfc0ba7.css",
-    "static/js/main.668213f1.js"
+    "static/css/main.14c0ae42.css",
+    "static/js/main.718f01f6.js"
   ]
 }
