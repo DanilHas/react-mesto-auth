@@ -5,13 +5,11 @@ function ConfirmPopup({
   onClose,
   card,
   onCardDelete,
-  onLoading,
   isLoading,
-  isValid,
+  isAnyPopupOpened,
 }) {
   const handleSubmit = (event) => {
     event.preventDefault();
-    onLoading();
 
     onCardDelete(card);
   };
@@ -26,7 +24,8 @@ function ConfirmPopup({
       onClose={onClose}
       onSubmit={handleSubmit}
       isLoading={isLoading}
-      isValid={isValid}
+      isValid={true}
+      isAnyPopupOpened={isAnyPopupOpened}
     />
   );
 }

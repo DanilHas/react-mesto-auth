@@ -1,24 +1,24 @@
 import { useEffect, useState } from 'react';
 import PopupWithForm from './PopupWithForm';
+import useCheckValidation from '../hooks/useCheckValidation';
 
 function AddPlacePopup({
   isOpen,
   onClose,
   onAddPlace,
-  onLoading,
   isLoading,
-  handleValidation,
-  validation,
-  setErrorMessage,
+  isAnyPopupOpened,
 }) {
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
+
+  const [validation, handleValidation, setErrorMessage, setValid] =
+    useCheckValidation();
 
   const { isInputValid, errorMessage, isValid } = validation;
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onLoading();
 
     onAddPlace({
       name,
@@ -26,11 +26,17 @@ function AddPlacePopup({
     });
   };
 
+  const handleClose = () => {
+    onClose();
+    setValid(false);
+  };
+
   useEffect(() => {
     setName('');
     setLink('');
     setErrorMessage({});
-  }, [isOpen, setErrorMessage]);
+    setValid(false);
+  }, [isOpen, setErrorMessage, setValid]);
 
   const handleChangeName = (event) => {
     setName(event.target.value);
@@ -47,11 +53,12 @@ function AddPlacePopup({
       submitButtonTitle="Создать"
       submitButtonDescription="создания новой карточки"
       isOpen={isOpen}
-      onClose={onClose}
+      onClose={handleClose}
       onSubmit={handleSubmit}
       isLoading={isLoading}
       onChange={handleValidation}
       isValid={isValid}
+      isAnyPopupOpened={isAnyPopupOpened}
     >
       <fieldset className="form__user-data">
         <input

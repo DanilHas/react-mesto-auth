@@ -1,21 +1,22 @@
 import { useContext, useEffect, useState } from 'react';
 import PopupWithForm from './PopupWithForm';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import useCheckValidation from '../hooks/useCheckValidation';
 
 function EditProfilePopup({
   isOpen,
   onClose,
   onUpdateUser,
-  onLoading,
   isLoading,
-  handleValidation,
-  validation,
-  setErrorMessage,
+  isAnyPopupOpened,
 }) {
   const currentUser = useContext(CurrentUserContext);
 
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+
+  const [validation, handleValidation, setErrorMessage, setValid] =
+    useCheckValidation();
 
   const { isInputValid, errorMessage, isValid } = validation;
 
@@ -23,7 +24,8 @@ function EditProfilePopup({
     setName(currentUser.name);
     setDescription(currentUser.about);
     setErrorMessage({});
-  }, [currentUser, isOpen, setErrorMessage]);
+    setValid(false);
+  }, [currentUser, isOpen, setErrorMessage, setValid]);
 
   const handleChangeName = (event) => {
     setName(event.target.value);
@@ -35,12 +37,16 @@ function EditProfilePopup({
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onLoading();
 
     onUpdateUser({
       name,
       about: description,
     });
+  };
+
+  const handleClose = () => {
+    onClose();
+    setValid(false);
   };
 
   return (
@@ -50,11 +56,12 @@ function EditProfilePopup({
       submitButtonTitle="Сохранить"
       submitButtonDescription="сохранения данных пользователя"
       isOpen={isOpen}
-      onClose={onClose}
+      onClose={handleClose}
       onSubmit={handleSubmit}
       isLoading={isLoading}
       onChange={handleValidation}
       isValid={isValid}
+      isAnyPopupOpened={isAnyPopupOpened}
     >
       <fieldset className="form__user-data">
         <input

@@ -1,19 +1,25 @@
-import { Link } from 'react-router-dom';
-import headerLogo from '../images/header-logo.svg';
+import { Route, Routes } from 'react-router-dom';
+import MainPageHeader from './MainPageHeader';
+import InitialHeader from './InitialHeader';
 
-function Header({ children, isBurgerMenuOpen }) {
+function Header({ userData, setLoggedIn }) {
   return (
-    <header className={`header ${isBurgerMenuOpen ? 'header_active' : ''}`}>
-      <Link to="/">
-        <img
-          className="header__logo"
-          src={headerLogo}
-          id="logo"
-          alt="Логотип 'Место'"
-        />
-      </Link>
-      {children}
-    </header>
+    <Routes>
+      <Route
+        path="/signin"
+        element={<InitialHeader linkTo="/signup" linkTitle="Регистрация" />}
+      />
+      <Route
+        path="/signup"
+        element={<InitialHeader linkTo="/signin" linkTitle="Войти" />}
+      />
+      <Route
+        path="/"
+        element={
+          <MainPageHeader userData={userData} setLoggedIn={setLoggedIn} />
+        }
+      />
+    </Routes>
   );
 }
 

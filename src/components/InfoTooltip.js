@@ -1,9 +1,17 @@
-import success from '../images/success.svg';
-import fail from '../images/fail.svg';
+function InfoTooltip({ isOpen, onClose, data, isAnyPopupOpened }) {
+  const { src, alt, title } = data;
 
-function InfoTooltip({ isOpen, onClose, isSuccess }) {
+  const closePopupByClickOutside = (event) => {
+    if (event.target.classList.contains('popup_opened') && isAnyPopupOpened()) {
+      onClose();
+    }
+  };
+
   return (
-    <section className={`popup ${isOpen ? `popup_opened` : ''} `}>
+    <section
+      className={`popup ${isOpen ? `popup_opened` : ''} `}
+      onMouseDown={closePopupByClickOutside}
+    >
       <div className="popup__container">
         <button
           className="popup__close-button"
@@ -11,20 +19,8 @@ function InfoTooltip({ isOpen, onClose, isSuccess }) {
           aria-label="закрытия модального окна"
           onClick={onClose}
         />
-        <img
-          src={isSuccess ? success : fail}
-          alt={
-            isSuccess
-              ? 'Изображение успешной аутентификации'
-              : 'Изображение ошибки при аутентификации'
-          }
-          className="popup__auth-image"
-        ></img>
-        <h2 className="popup__title popup__title_place_auth">
-          {isSuccess
-            ? 'Вы успешно зарегистрировались!'
-            : 'Что-то пошло не так! Попробуйте еще раз.'}
-        </h2>
+        <img src={src} alt={alt} className="popup__auth-image" />
+        <h2 className="popup__title popup__title_place_auth">{title}</h2>
       </div>
     </section>
   );

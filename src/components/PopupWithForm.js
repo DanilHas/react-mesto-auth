@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 function PopupWithForm({
   name,
   title,
@@ -10,10 +12,33 @@ function PopupWithForm({
   isLoading,
   onChange,
   isValid,
+  isAnyPopupOpened,
 }) {
+  const closePopupByClickOnEsc = (event) => {
+    if (event.key === 'Escape' && isAnyPopupOpened()) {
+      onClose();
+    }
+  };
+
+  const closePopupByClickOutside = (event) => {
+    if (event.target.classList.contains('popup_opened') && isAnyPopupOpened()) {
+      onClose();
+    }
+  };
+
+  useEffect(() => {
+    if (isAnyPopupOpened) {
+      document.addEventListener('keydown', closePopupByClickOnEsc);
+
+      return () =>
+        document.removeEventListener('keydown', closePopupByClickOnEsc);
+    }
+  }, [isAnyPopupOpened]);
+
   return (
     <section
       className={`popup popup_type_${name} ${isOpen ? `popup_opened` : ''} `}
+      onMouseDown={closePopupByClickOutside}
     >
       <div className="popup__container">
         <button

@@ -1,8 +1,15 @@
-function ImagePopup({ card, onClose, isOpen }) {
+function ImagePopup({ card, onClose, isOpen, isAnyPopupOpened }) {
+  const closePopupByClickOutside = (event) => {
+    if (event.target.classList.contains('popup_opened') && isAnyPopupOpened()) {
+      onClose();
+    }
+  };
+
   return (
     <section
       className={`popup popup_type_upscaling ${isOpen ? `popup_opened` : ''}`}
       aria-label="Увеличить изображение картинки"
+      onMouseDown={closePopupByClickOutside}
     >
       <div className="popup__upscaling-container">
         <button

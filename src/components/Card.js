@@ -23,7 +23,7 @@ function Card({ card, onCardClick, onCardLike, onConfirm }) {
   };
 
   return (
-    <li className="card">
+    <>
       {isOwn && (
         <button
           className="card__delete-button"
@@ -50,7 +50,7 @@ function Card({ card, onCardClick, onCardLike, onConfirm }) {
           <p className="card__like-counter">{card.likes.length}</p>
         </div>
       </div>
-    </li>
+    </>
   );
 }
 
