@@ -5,16 +5,12 @@ import useCheckValidation from '../hooks/useCheckValidation';
 import success from '../images/success.svg';
 import fail from '../images/fail.svg';
 
-function Register({
-  setInfoTooltipOpen,
-  isLoading,
-  setLoading,
-  setInfoTooltipData,
-}) {
+function Register({ setInfoTooltipOpen, setInfoTooltipData }) {
   const [formValues, setFormValues] = useState({
     email: '',
     password: '',
   });
+  const [isLoadingRegister, setLoadingRegister] = useState(false);
 
   const navigate = useNavigate();
 
@@ -35,7 +31,7 @@ function Register({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
+    setLoadingRegister(true);
 
     auth
       .register(email, password)
@@ -61,7 +57,7 @@ function Register({
         });
         console.error(`${err} ${err.message}`);
       })
-      .finally(() => setLoading(false));
+      .finally(() => setLoadingRegister(false));
   };
 
   return (
@@ -121,12 +117,12 @@ function Register({
           >
             <span
               className={
-                isLoading
+                isLoadingRegister
                   ? 'form__spinner form__spinner_type_auth'
                   : 'form__spinner_hide'
               }
             ></span>
-            {isLoading ? '' : 'Зарегистрироваться'}
+            {isLoadingRegister ? '' : 'Зарегистрироваться'}
           </button>
         </form>
         <p className="auth__text">

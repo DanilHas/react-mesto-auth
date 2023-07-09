@@ -1,9 +1,26 @@
-function ImagePopup({ card, onClose, isOpen, isAnyPopupOpened }) {
+import { useEffect } from 'react';
+
+function ImagePopup({ card, onClose, isOpen }) {
   const closePopupByClickOutside = (event) => {
-    if (event.target.classList.contains('popup_opened') && isAnyPopupOpened()) {
+    if (event.target.classList.contains('popup_opened') && isOpen) {
       onClose();
     }
   };
+
+  const closePopupByClickOnEsc = (event) => {
+    if (event.key === 'Escape' && isOpen) {
+      onClose();
+    }
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      document.addEventListener('keydown', closePopupByClickOnEsc);
+
+      return () =>
+        document.removeEventListener('keydown', closePopupByClickOnEsc);
+    }
+  }, [isOpen]);
 
   return (
     <section

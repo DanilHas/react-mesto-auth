@@ -3,13 +3,7 @@ import PopupWithForm from './PopupWithForm';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import useCheckValidation from '../hooks/useCheckValidation';
 
-function EditProfilePopup({
-  isOpen,
-  onClose,
-  onUpdateUser,
-  isLoading,
-  isAnyPopupOpened,
-}) {
+function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
   const currentUser = useContext(CurrentUserContext);
 
   const [name, setName] = useState('');
@@ -44,11 +38,6 @@ function EditProfilePopup({
     });
   };
 
-  const handleClose = () => {
-    onClose();
-    setValid(false);
-  };
-
   return (
     <PopupWithForm
       name="edit-profile"
@@ -56,12 +45,11 @@ function EditProfilePopup({
       submitButtonTitle="Сохранить"
       submitButtonDescription="сохранения данных пользователя"
       isOpen={isOpen}
-      onClose={handleClose}
+      onClose={onClose}
       onSubmit={handleSubmit}
       isLoading={isLoading}
       onChange={handleValidation}
       isValid={isValid}
-      isAnyPopupOpened={isAnyPopupOpened}
     >
       <fieldset className="form__user-data">
         <input

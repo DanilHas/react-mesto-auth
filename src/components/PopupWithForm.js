@@ -12,28 +12,27 @@ function PopupWithForm({
   isLoading,
   onChange,
   isValid,
-  isAnyPopupOpened,
 }) {
   const closePopupByClickOnEsc = (event) => {
-    if (event.key === 'Escape' && isAnyPopupOpened()) {
+    if (event.key === 'Escape' && isOpen) {
       onClose();
     }
   };
 
   const closePopupByClickOutside = (event) => {
-    if (event.target.classList.contains('popup_opened') && isAnyPopupOpened()) {
+    if (event.target.classList.contains('popup_opened') && isOpen) {
       onClose();
     }
   };
 
   useEffect(() => {
-    if (isAnyPopupOpened) {
+    if (isOpen) {
       document.addEventListener('keydown', closePopupByClickOnEsc);
 
       return () =>
         document.removeEventListener('keydown', closePopupByClickOnEsc);
     }
-  }, [isAnyPopupOpened]);
+  }, [isOpen]);
 
   return (
     <section

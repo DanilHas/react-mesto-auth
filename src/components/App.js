@@ -29,8 +29,6 @@ function App() {
     useState(false);
   const [isLoadingEditAvatarPopup, setLoadingEditAvatarPopup] = useState(false);
   const [isLoadingAddPlacePopup, setLoadingAddPlacePopup] = useState(false);
-  const [isLoadingRegister, setLoadingRegister] = useState(false);
-  const [isLoadingLogin, setLoadingLogin] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [isInfoTooltipOpen, setInfoTooltipOpen] = useState(false);
   const [userEmail, setUserEmail] = useState('');
@@ -74,19 +72,6 @@ function App() {
         .catch((err) => console.error(`${err} ${err.message}`));
     }
   }, [loggedIn]);
-
-  const checkIsSomePopupOpen = () => {
-    const popupsState = [
-      isEditProfilePopupOpen,
-      isAddPlacePopupOpen,
-      isEditAvatarPopupOpen,
-      isConfirmPopupOpen,
-      isImagePopupOpen,
-      isInfoTooltipOpen,
-    ];
-
-    return popupsState.some((state) => state);
-  };
 
   const handleEditAvatarClick = () => {
     setEditAvatarPopupOpen(true);
@@ -212,8 +197,6 @@ function App() {
           element={
             <Register
               setInfoTooltipOpen={setInfoTooltipOpen}
-              isLoading={isLoadingRegister}
-              setLoading={setLoadingRegister}
               setInfoTooltipData={setInfoTooltipData}
             />
           }
@@ -224,8 +207,6 @@ function App() {
             <Login
               handleLogin={handleLogin}
               setInfoTooltipOpen={setInfoTooltipOpen}
-              isLoading={isLoadingLogin}
-              setLoading={setLoadingLogin}
               setInfoTooltipData={setInfoTooltipData}
               setUserEmail={setUserEmail}
             />
@@ -247,21 +228,18 @@ function App() {
         onClose={closeAllPopups}
         onUpdateUser={handleUpdateUser}
         isLoading={isLoadingEditProfilePopup}
-        isAnyPopupOpened={checkIsSomePopupOpen}
       />
       <AddPlacePopup
         isOpen={isAddPlacePopupOpen}
         onClose={closeAllPopups}
         onAddPlace={handleAddPlaceSubmit}
         isLoading={isLoadingAddPlacePopup}
-        isAnyPopupOpened={checkIsSomePopupOpen}
       />
       <EditAvatarPopup
         isOpen={isEditAvatarPopupOpen}
         onClose={closeAllPopups}
         onUpdateAvatar={handleUpdateAvatar}
         isLoading={isLoadingEditAvatarPopup}
-        isAnyPopupOpened={checkIsSomePopupOpen}
       />
       <ConfirmPopup
         isOpen={isConfirmPopupOpen}
@@ -269,18 +247,15 @@ function App() {
         card={selectedCard}
         onCardDelete={handleCardDelete}
         isLoading={isLoadingConfirmPopup}
-        isAnyPopupOpened={checkIsSomePopupOpen}
       />
       <ImagePopup
         card={selectedCard}
         onClose={closeAllPopups}
         isOpen={isImagePopupOpen}
-        isAnyPopupOpened={checkIsSomePopupOpen}
       />
       <InfoTooltip
         isOpen={isInfoTooltipOpen}
         onClose={closeAllPopups}
-        isAnyPopupOpened={checkIsSomePopupOpen}
         data={infoTooltipData}
       />
     </CurrentUserContext.Provider>

@@ -1,11 +1,28 @@
-function InfoTooltip({ isOpen, onClose, data, isAnyPopupOpened }) {
+import { useEffect } from 'react';
+
+function InfoTooltip({ isOpen, onClose, data }) {
   const { src, alt, title } = data;
 
   const closePopupByClickOutside = (event) => {
-    if (event.target.classList.contains('popup_opened') && isAnyPopupOpened()) {
+    if (event.target.classList.contains('popup_opened') && isOpen) {
       onClose();
     }
   };
+
+  const closePopupByClickOnEsc = (event) => {
+    if (event.key === 'Escape' && isOpen) {
+      onClose();
+    }
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      document.addEventListener('keydown', closePopupByClickOnEsc);
+
+      return () =>
+        document.removeEventListener('keydown', closePopupByClickOnEsc);
+    }
+  }, [isOpen]);
 
   return (
     <section

@@ -7,8 +7,6 @@ import fail from '../images/fail.svg';
 function Login({
   handleLogin,
   setInfoTooltipOpen,
-  isLoading,
-  setLoading,
   setInfoTooltipData,
   setUserEmail,
 }) {
@@ -16,6 +14,7 @@ function Login({
     email: '',
     password: '',
   });
+  const [isLoadingLogin, setLoadingLogin] = useState(false);
 
   const { email, password } = formValues;
 
@@ -36,7 +35,7 @@ function Login({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
+    setLoadingLogin(true);
 
     auth
       .authorize(email, password)
@@ -61,7 +60,7 @@ function Login({
         });
         console.error(`${err} ${err.message}`);
       })
-      .finally(() => setLoading(false));
+      .finally(() => setLoadingLogin(false));
   };
 
   return (
@@ -121,12 +120,12 @@ function Login({
           >
             <span
               className={
-                isLoading
+                isLoadingLogin
                   ? 'form__spinner form__spinner_type_auth'
                   : 'form__spinner_hide'
               }
             ></span>
-            {isLoading ? '' : 'Войти'}
+            {isLoadingLogin ? '' : 'Войти'}
           </button>
         </form>
       </div>

@@ -1,13 +1,6 @@
 import PopupWithForm from './PopupWithForm';
 
-function ConfirmPopup({
-  isOpen,
-  onClose,
-  card,
-  onCardDelete,
-  isLoading,
-  isAnyPopupOpened,
-}) {
+function ConfirmPopup({ isOpen, onClose, card, onCardDelete, isLoading }) {
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -25,7 +18,6 @@ function ConfirmPopup({
       onSubmit={handleSubmit}
       isLoading={isLoading}
       isValid={true}
-      isAnyPopupOpened={isAnyPopupOpened}
     />
   );
 }

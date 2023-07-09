@@ -2,13 +2,7 @@ import { useEffect, useRef } from 'react';
 import PopupWithForm from './PopupWithForm';
 import useCheckValidation from '../hooks/useCheckValidation';
 
-function EditAvatarPopup({
-  isOpen,
-  onClose,
-  onUpdateAvatar,
-  isLoading,
-  isAnyPopupOpened,
-}) {
+function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoading }) {
   const inputRef = useRef();
 
   const [validation, handleValidation, setErrorMessage, setValid] =
@@ -24,11 +18,6 @@ function EditAvatarPopup({
     });
   };
 
-  const handleClose = () => {
-    onClose();
-    setValid(false);
-  };
-
   useEffect(() => {
     inputRef.current.value = '';
     setErrorMessage({});
@@ -42,12 +31,11 @@ function EditAvatarPopup({
       submitButtonTitle="Сохранить"
       submitButtonDescription="сохранения аватара"
       isOpen={isOpen}
-      onClose={handleClose}
+      onClose={onClose}
       onSubmit={handleSubmit}
       isLoading={isLoading}
       onChange={handleValidation}
       isValid={isValid}
-      isAnyPopupOpened={isAnyPopupOpened}
     >
       <fieldset className="form__user-data">
         <input

@@ -2,13 +2,7 @@ import { useEffect, useState } from 'react';
 import PopupWithForm from './PopupWithForm';
 import useCheckValidation from '../hooks/useCheckValidation';
 
-function AddPlacePopup({
-  isOpen,
-  onClose,
-  onAddPlace,
-  isLoading,
-  isAnyPopupOpened,
-}) {
+function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoading }) {
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
 
@@ -24,11 +18,6 @@ function AddPlacePopup({
       name,
       link,
     });
-  };
-
-  const handleClose = () => {
-    onClose();
-    setValid(false);
   };
 
   useEffect(() => {
@@ -53,12 +42,11 @@ function AddPlacePopup({
       submitButtonTitle="Создать"
       submitButtonDescription="создания новой карточки"
       isOpen={isOpen}
-      onClose={handleClose}
+      onClose={onClose}
       onSubmit={handleSubmit}
       isLoading={isLoading}
       onChange={handleValidation}
       isValid={isValid}
-      isAnyPopupOpened={isAnyPopupOpened}
     >
       <fieldset className="form__user-data">
         <input
